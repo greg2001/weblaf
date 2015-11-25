@@ -116,7 +116,14 @@ public class WebFileChooserUI extends FileChooserUI
             {
                 ignoreFileSelectionChanges = true;
                 final List<File> selectedFiles = fileChooserPanel.getSelectedFiles ();
-                fileChooser.setSelectedFiles ( selectedFiles.toArray ( new File[ selectedFiles.size () ] ) );
+                if ( fileChooser.isMultiSelectionEnabled () )
+                {
+                    fileChooser.setSelectedFiles ( selectedFiles.toArray ( new File[ selectedFiles.size () ] ) );
+                }
+                else
+                {
+                    fileChooser.setSelectedFile ( selectedFiles.size () > 0 ? selectedFiles.get (0) : null );
+                }
                 ignoreFileSelectionChanges = false;
 
                 fileChooser.approveSelection ();
@@ -142,7 +149,14 @@ public class WebFileChooserUI extends FileChooserUI
             public void selectionChanged ( List<File> selectedFiles )
             {
                 ignoreFileSelectionChanges = true;
-                fileChooser.setSelectedFiles ( selectedFiles.toArray ( new File[ selectedFiles.size () ] ) );
+                if ( fileChooser.isMultiSelectionEnabled () )
+                {
+                    fileChooser.setSelectedFiles ( selectedFiles.toArray ( new File[ selectedFiles.size () ] ) );
+                }
+                else
+                {
+                    fileChooser.setSelectedFile ( selectedFiles.size () > 0 ? selectedFiles.get (0) : null );
+                }
                 ignoreFileSelectionChanges = false;
             }
         } );

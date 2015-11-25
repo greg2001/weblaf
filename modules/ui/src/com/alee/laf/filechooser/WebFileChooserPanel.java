@@ -1400,7 +1400,7 @@ public class WebFileChooserPanel extends WebPanel
         {
             fileTable.setSelectedFile ( file );
         }
-        if ( file != null && !file.exists () )
+        if ( file != null /*&& !file.exists ()*/ )
         {
             updateSelectedFilesFieldImpl ( Arrays.asList ( file ) );
         }

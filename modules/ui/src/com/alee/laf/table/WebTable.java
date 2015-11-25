@@ -110,8 +110,7 @@ public class WebTable extends JTable implements FontMethods<WebTable>
 
     public void setSelectedRow ( final int row, final boolean shouldScroll )
     {
-        clearSelection ();
-        addSelectedRow ( row );
+        setSelectedRows ( row, row );
         if ( row != -1 && shouldScroll )
         {
             scrollToRow ( row );
@@ -120,17 +119,20 @@ public class WebTable extends JTable implements FontMethods<WebTable>
 
     public void addSelectedRow ( final int row )
     {
-        if ( row != -1 )
-        {
-            addColumnSelectionInterval ( 0, getColumnCount () - 1 );
-            addRowSelectionInterval ( row, row );
-        }
+        addSelectedRows ( row, row );
     }
 
     public void setSelectedRows ( final int startRow, final int endRow )
     {
-        clearSelection ();
-        addSelectedRows ( startRow, endRow );
+        if ( startRow != -1 && endRow != -1 )
+        {
+            addColumnSelectionInterval ( 0, getColumnCount () - 1 );
+            setRowSelectionInterval ( startRow, endRow );
+        }
+        else
+        {
+            clearSelection ();
+        }
     }
 
     public void addSelectedRows ( final int startRow, final int endRow )
@@ -149,8 +151,7 @@ public class WebTable extends JTable implements FontMethods<WebTable>
 
     public void setSelectedColumn ( final int column, final boolean shouldScroll )
     {
-        clearSelection ();
-        addSelectedColumn ( column );
+        setSelectedColumns ( column, column );
         if ( shouldScroll )
         {
             scrollToColumn ( column );
@@ -159,17 +160,20 @@ public class WebTable extends JTable implements FontMethods<WebTable>
 
     public void addSelectedColumn ( final int column )
     {
-        if ( column != -1 )
-        {
-            addColumnSelectionInterval ( column, column );
-            addRowSelectionInterval ( 0, getRowCount () - 1 );
-        }
+        addSelectedColumns ( column, column );
     }
 
     public void setSelectedColumns ( final int startColumn, final int endColumn )
     {
-        clearSelection ();
-        addSelectedColumns ( startColumn, endColumn );
+        if ( startColumn != -1 && endColumn != -1 )
+        {
+            setColumnSelectionInterval ( startColumn, endColumn );
+            addRowSelectionInterval ( 0, getRowCount () - 1 );
+        }
+        else
+        {
+          clearSelection();
+        }
     }
 
     public void addSelectedColumns ( final int startColumn, final int endColumn )
