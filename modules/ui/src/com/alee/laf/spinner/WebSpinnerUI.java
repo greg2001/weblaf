@@ -143,9 +143,12 @@ public class WebSpinnerUI extends BasicSpinnerUI implements ShapeProvider, Borde
     public void paint ( final Graphics g, final JComponent c )
     {
         // Border, background and shade
-        LafUtils.drawWebStyle ( ( Graphics2D ) g, c,
-                drawFocus && SwingUtils.hasFocusOwner ( spinner ) ? StyleConstants.fieldFocusColor : StyleConstants.shadeColor, shadeWidth,
-                round );
+        if ( drawBorder )
+        {
+            LafUtils.drawWebStyle ( ( Graphics2D ) g, c,
+                    drawFocus && SwingUtils.hasFocusOwner ( spinner ) ? StyleConstants.fieldFocusColor : StyleConstants.shadeColor, shadeWidth,
+                    round );
+        }
 
         super.paint ( g, c );
     }
