@@ -563,6 +563,9 @@ public class WebLookAndFeel extends BasicLookAndFeel
         // JTextPanes
         table.put ( "TextPane.border", textComponentBorder );
 
+        // JSpinners
+        table.put ( "Spinner.editorBorderPainted", Boolean.TRUE ); // disable border control in BasicSpinnerUI
+      
         // Option pane
         table.put ( "OptionPane.messageAreaBorder",
                 new SwingLazyValue ( "javax.swing.plaf.BorderUIResource$EmptyBorderUIResource", new Object[]{ 0, 0, 5, 0 } ) );

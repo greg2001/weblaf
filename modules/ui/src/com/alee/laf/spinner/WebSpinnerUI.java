@@ -47,6 +47,7 @@ public class WebSpinnerUI extends BasicSpinnerUI implements ShapeProvider, Borde
     private boolean drawFocus = WebSpinnerStyle.drawFocus;
     private int round = WebSpinnerStyle.round;
     private int shadeWidth = WebSpinnerStyle.shadeWidth;
+    private JTextComponent editorTextComponent;
 
     @SuppressWarnings ( "UnusedParameters" )
     public static ComponentUI createUI ( final JComponent c )
@@ -77,6 +78,8 @@ public class WebSpinnerUI extends BasicSpinnerUI implements ShapeProvider, Borde
     @Override
     public void updateBorder ()
     {
+        updateEditorBorder ();
+
         if ( spinner != null )
         {
             // Preserve old borders
@@ -93,6 +96,14 @@ public class WebSpinnerUI extends BasicSpinnerUI implements ShapeProvider, Borde
             {
                 spinner.setBorder ( BorderFactory.createEmptyBorder ( 1, 1, 1, 1 ) );
             }
+        }
+    }
+
+    public void updateEditorBorder ()
+    {
+        if ( editorTextComponent != null && editorTextComponent.getUI () instanceof WebTextFieldUI )
+        {
+            ( ( WebTextFieldUI ) editorTextComponent.getUI () ).setDrawBorder ( !drawBorder );
         }
     }
 
@@ -185,25 +196,25 @@ public class WebSpinnerUI extends BasicSpinnerUI implements ShapeProvider, Borde
     protected JComponent createEditor ()
     {
         final JComponent editor = super.createEditor ();
-        if ( editor instanceof JTextComponent )
-        {
-            installFieldUI ( ( JTextComponent ) editor, spinner );
-        }
-        else
-        {
-            installFieldUI ( ( ( JSpinner.DefaultEditor ) editor ).getTextField (), spinner );
-        }
+        installFieldUI ( editor );
         return editor;
     }
 
-    public static void installFieldUI ( final JTextComponent field, final JSpinner spinner )
+    @Override
+    protected void replaceEditor ( JComponent oldEditor, JComponent newEditor )
     {
-        field.setMargin ( new Insets ( 0, 0, 0, 0 ) );
-        field.setBorder ( BorderFactory.createEmptyBorder ( 0, 0, 0, 0 ) );
+        super.replaceEditor ( oldEditor, newEditor );
+        installFieldUI ( newEditor );
+    }
 
-        final WebTextFieldUI textFieldUI = new WebTextFieldUI ();
-        textFieldUI.setDrawBorder ( false );
-        field.setUI ( textFieldUI );
+    protected void installFieldUI ( final JComponent editor )
+    {
+        final JTextComponent field = ( editor instanceof JTextComponent ) ?
+            ( JTextComponent ) editor :
+            ( ( JSpinner.DefaultEditor ) editor ).getTextField ();
+
+        editorTextComponent = field;
+        updateEditorBorder ();
 
         field.setOpaque ( true );
         field.setBackground ( Color.WHITE );

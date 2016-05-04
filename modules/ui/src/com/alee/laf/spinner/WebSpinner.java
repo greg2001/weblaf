@@ -94,35 +94,6 @@ public class WebSpinner extends JSpinner implements EventMethods, ToolTipMethods
     }
 
     @Override
-    protected JComponent createEditor ( final SpinnerModel model )
-    {
-        if ( model instanceof SpinnerDateModel )
-        {
-            final DateEditor dateEditor = new DateEditor ( this );
-            WebSpinnerUI.installFieldUI ( dateEditor.getTextField (), WebSpinner.this );
-            return dateEditor;
-        }
-        else if ( model instanceof SpinnerListModel )
-        {
-            final ListEditor listEditor = new ListEditor ( this );
-            WebSpinnerUI.installFieldUI ( listEditor.getTextField (), WebSpinner.this );
-            return listEditor;
-        }
-        else if ( model instanceof SpinnerNumberModel )
-        {
-            final NumberEditor numberEditor = new NumberEditor ( this );
-            WebSpinnerUI.installFieldUI ( numberEditor.getTextField (), WebSpinner.this );
-            return numberEditor;
-        }
-        else
-        {
-            final DefaultEditor defaultEditor = new DefaultEditor ( this );
-            WebSpinnerUI.installFieldUI ( defaultEditor.getTextField (), WebSpinner.this );
-            return defaultEditor;
-        }
-    }
-
-    @Override
     public Shape provideShape ()
     {
         return getWebUI ().provideShape ();
